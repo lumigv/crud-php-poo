@@ -9,7 +9,9 @@ DB_PASSWORD: Contraseña del usuario e la BD
 include_once("config.php");
 
 //Consulta de selección. Selecciona todos los usuarios ordenados de manera descendente por el campo id
-$result = mysqli_query($mysqli, "SELECT * FROM users ORDER BY id DESC");
+//$result = mysqli_query($mysqli, "SELECT * FROM users ORDER BY id DESC");
+
+$result = $mysqli->query("SELECT * FROM users ORDER BY id DESC");
 
 ?>
 
@@ -65,7 +67,7 @@ $res["surname"] = "Zapata";
 $res["age"] = "23";
 */
 //Genera la tabla de la página inicial
-	while($res = mysqli_fetch_array($result)) {
+	while($res = $result->fetch_array()) {
 		echo "<tr>\n";
 		echo "<td>".$res['name']."</td>\n";
 		echo "<td>".$res['surname']."</td>\n";
@@ -78,7 +80,7 @@ $res["age"] = "23";
 		echo "</tr>\n";
 	}
 //Cierra la conexión de BD previamente abierta
-	mysqli_close($mysqli);
+	$mysqli->close();
 	?>
 	</tbdody>
 	</table>

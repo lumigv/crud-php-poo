@@ -7,10 +7,10 @@ En este caso comprueba la información "modifica" procedente del botón Guardae 
 Transacción de datos utilizando el método: POST
 */
 if(isset($_POST['modifica'])) {
-	$id = mysqli_real_escape_string($mysqli, $_POST['id']);
-	$name = mysqli_real_escape_string($mysqli, $_POST['name']);
-	$surname = mysqli_real_escape_string($mysqli, $_POST['surname']);
-	$age = mysqli_real_escape_string($mysqli, $_POST['age']);
+	$id = mysqli->real_escape_string($_POST['id']);
+	$name = mysqli->real_escape_string($_POST['name']);
+	$surname = mysqli->real_escape_string($_POST['surname']);
+	$age = mysqli->real_escape_string($_POST['age']);
 
 	if(empty($name) || empty($surname) || empty($age))	{
 		if(empty($name)) {
@@ -28,19 +28,19 @@ if(isset($_POST['modifica'])) {
 	else 
 	{
 //Prepara una sentencia SQL para su ejecución. En este caso una modificación de un registro de la BD.				
-		$stmt = mysqli_prepare($mysqli, "UPDATE users SET name=?,surname=?,age=? WHERE id=?");
+		$stmt = mysqli->prepare("UPDATE users SET name=?,surname=?,age=? WHERE id=?");
 /*Enlaza variables como parámetros a una setencia preparada. 
 i: La variable correspondiente tiene tipo entero
 d: La variable correspondiente tiene tipo doble
 s:	La variable correspondiente tiene tipo cadena
 */				
-		mysqli_stmt_bind_param($stmt, "ssii", $name, $surname, $age, $id);
+		mysqli->stmt_bind_param($stmt, "ssii", $name, $surname, $age, $id);
 //Ejecuta una consulta preparada			
-		mysqli_stmt_execute($stmt);
+		mysqli->stmt_execute($stmt);
 //Libera la memoria donde se almacenó el resultado
-		mysqli_stmt_free_result($stmt);
+		mysqli->stmt_free_result($stmt);
 //Cierra la sentencia preparada		
-		mysqli_stmt_close($stmt);
+		mysqli->stmt_close($stmt);
 
 		header("Location: index.php");
 	}// fin sino
@@ -52,25 +52,25 @@ s:	La variable correspondiente tiene tipo cadena
 /*Obtiene el id del dato a modificar a partir de la URL. Transacción de datos utilizando el método: GET*/
 $id = $_GET['id'];
 
-$id = mysqli_real_escape_string($mysqli, $id);
+$id = mysqli->real_escape_string($id);
 
 
 //Prepara una sentencia SQL para su ejecución. En este caso selecciona el registro a modificar y lo muestra en el formulario.				
-$stmt = mysqli_prepare($mysqli, "SELECT name, surname, age FROM users WHERE id=?");
+$stmt = mysqli->prepare("SELECT name, surname, age FROM users WHERE id=?");
 //Enlaza variables como parámetros a una setencia preparada. 
-mysqli_stmt_bind_param($stmt, "i", $id);
+mysqli->stmt_bind_param($stmt, "i", $id);
 //Ejecuta una consulta preparada
-mysqli_stmt_execute($stmt);
+mysqli->stmt_execute($stmt);
 //Enlaza variables a una setencia preparada para el almacenamiento del resultado
-mysqli_stmt_bind_result($stmt, $name, $surname, $age);
+mysqli->stmt_bind_result($stmt, $name, $surname, $age);
 //Obtiene el resultado de una sentencia SQL preparada en las variables enlazadas
-mysqli_stmt_fetch($stmt);
+mysqli->stmt_fetch($stmt);
 //Libera la memoria donde se almacenó el resultado		
-mysqli_stmt_free_result($stmt);
+mysqli->stmt_free_result($stmt);
 //Cierra la sentencia preparada
-mysqli_stmt_close($stmt);
+mysqli->stmt_close($stmt);
 //Cierra la conexión de base de datos previamente abierta
-mysqli_close($mysqli);
+mysqli->close();
 ?>
 
 <!DOCTYPE html>
