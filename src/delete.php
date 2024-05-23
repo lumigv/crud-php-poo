@@ -12,19 +12,19 @@ PHP proporciona el array asociativo $_POST para acceder a la información enviad
 $id = $_GET['id'];
 
 //Prepara una sentencia SQL para su ejecución. En este caso el borrado de un registro de la BD.
-$stmt = mysqli->prepare("DELETE FROM users WHERE id=?");
+$stmt = $mysqli->prepare("DELETE FROM users WHERE id=?");
 /*Enlaza variables como parámetros a una setencia preparada. 
 i: La variable correspondiente tiene tipo entero
 d: La variable correspondiente tiene tipo doble
 s:	La variable correspondiente tiene tipo cadena
 */
-mysqli->stmt_bind_param($stmt, "i", $id);
+$stmt->bind_param($stmt, "i", $id);
 //Ejecuta una consulta preparada
-mysqli->stmt_execute($stmt);
+$stmt->execute();
 //Cierra la sentencia preparada
-mysqli->stmt_close($stmt);
+$stmt->close();
 //Cierra la conexión de base de datos previamente abierta
-mysqli->close();
+$mysqli->close();
 //Redirige a la página principal: index.php
 header("Location:index.php");
 ?>

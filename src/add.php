@@ -62,7 +62,7 @@ Los caracteres codificados son NUL (ASCII 0), \n, \r, \, ', ", y Control-Z.*/
 	else 
 	{
 //Prepara una sentencia SQL para su ejecución. En este caso el alta de un registro de la BD.	
-		//$stmt = mysqli_prepare($mysqli, "INSERT INTO users (name,surname,age) VALUES(?,?,?)");	
+//$stmt = mysqli_prepare($mysqli, "INSERT INTO users (name,surname,age) VALUES(?,?,?)");	
 		$stmt = $mysqli->prepare("INSERT INTO users (name,surname,age) VALUES(?,?,?)");
 /*Enlaza variables como parámetros a una setencia preparada. 
 i: La variable correspondiente tiene tipo entero
@@ -70,13 +70,25 @@ d: La variable correspondiente tiene tipo doble
 s:	La variable correspondiente tiene tipo cadena
 */	
 		echo "hola3\n";
-		$mysqli->stmt_bind_param($stmt, "ssi", $name, $surname, $age);
+
+
+/*Versión procedimiento
+mysqli_stmt_bind_param($stmt, "ssi", $name, $surname, $age);
 //Ejecuta una consulta preparada		
-		$mysqli->stmt_execute( $stmt);
+mysqli_stmt_execute( $stmt);
 //Libera la memoria donde se almacenó el resultado		
-		$mysqli->stmt_free_result($stmt);
+mysqli_stmt_free_result($stmt);
 //Cierra la sentencia preparada		
-		$mysqli->stmt_close($stmt);
+mysqli_stmt_close($stmt);
+
+*/
+		$stmt->bind_param("ssi", $name, $surname, $age);
+//Ejecuta una consulta preparada		
+		$stmt->execute();
+//Libera la memoria donde se almacenó el resultado		
+		$stmt->free_result();
+//Cierra la sentencia preparada		
+		$stmt->close();
 //Muestra mensaje exitoso		
 		echo "<div>Datos añadidos correctamente</div>";
 		echo "<a href='index.php'>Ver resultado</a>";
