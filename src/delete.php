@@ -18,7 +18,7 @@ i: La variable correspondiente tiene tipo entero
 d: La variable correspondiente tiene tipo doble
 s:	La variable correspondiente tiene tipo cadena
 */
-$stmt->bind_param($stmt, "i", $id);
+$stmt->bind_param("i", $id);
 //Ejecuta una consulta preparada
 $stmt->execute();
 //Cierra la sentencia preparada

@@ -22,11 +22,18 @@ define('DB_PASSWORD', 'password_here');
 
 
 //Abre una nueva conexión al servidor MySQL/MariaDB
-$mysqli = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+//$mysqli = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
+$mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
+echo "HolaConfig1\n";
+
 //Devuelve una descripción del último error producido en la conexión a la BD
-if (mysqli_connect_errno()) {
-    printf('Falló la conexión: %s\n', mysqli_connect_error());
+if ($mysqli->connect_error) {
+    printf('Falló la conexión: %s\n', $mysqli->connect_errno);
     exit();
 }
+
+echo "HolaConfig2\n";
 
 ?>
